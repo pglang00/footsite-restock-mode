@@ -32,8 +32,8 @@ async function monitor(req, res) {
             messages.forEach(async(message) => {
                 let restock = {};               
                 restock.site = message.embeds[0]['fields'][0]['value'].toLowerCase().replace(' ','').replace('footlockerus','footlocker');
-                if (restock.site == 'champssport') {
-                    restock.site += 's';
+                if (restock.site.includes('champ')) {
+                    restock.site = 'champssports';
                 }
                 
                 restock.sku = message.embeds[0]['fields'][1]['value'];
