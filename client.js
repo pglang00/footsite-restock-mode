@@ -37,6 +37,7 @@ async function main() {
                         element.start = start;
                         let eTS = new Date(element.timestamp);
                         if ((new Date(currentUtcTS) - new Date(restockUtcTS.getTime() + restockUtcTS.getTimezoneOffset() * 60000) < (new Date(currentUtcTS) - new Date(eTS.getTime() + eTS.getTimezoneOffset() * 60000)))) {
+                           // super gross, but this piece of code basically checks if the timestamp of the restock is newer than the pre-existing TS
                             element.timestamp = restockUtcTS;
                         }
                     }
