@@ -31,7 +31,11 @@ async function monitor(req, res) {
     channel.messages.fetch({ limit: 100 }).then(async(messages) => {
             messages.forEach(async(message) => {
                 let restock = {};               
-                restock.site = message.embeds[0]['fields'][0]['value'].toLowerCase().replace(' ','').replace('footlockerus','footlocker').replace('champssport','champssports');
+                restock.site = message.embeds[0]['fields'][0]['value'].toLowerCase().replace(' ','').replace('footlockerus','footlocker');
+                if (restock.site == 'champssport') {
+                    restock.site += 's';
+                }
+                
                 restock.sku = message.embeds[0]['fields'][1]['value'];
                 
 
