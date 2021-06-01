@@ -35,7 +35,10 @@ async function main() {
                     if (element.sku == item.sku && element.site == item.site) {
                         exists = true;
                         element.start = start;
-                        element.timestamp = restockUtcTS;
+                        let eTS = new Date(element.timestamp);
+                        if ((new Date(currentUtcTS) - new Date(restockUtcTS.getTime() + restockUtcTS.getTimezoneOffset() * 60000) < (new Date(currentUtcTS) - new Date(eTS.getTime() + eTS.getTimezoneOffset() * 60000)))) {
+                            element.timestamp = restockUtcTS;
+                        }
                     }
                 });
                 if (!exists) {
