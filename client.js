@@ -13,7 +13,7 @@ async function main() {
         await request('http://localhost:3000/monitor',opts,async(res,err,body) => {
             let data = JSON.parse(body);
             data.forEach(async(item) => {
-                let restockUtcTS = item.timestamp;
+                let restockUtcTS = new Date(item.timestamp);
                 
 
                 let now = new Date();
@@ -24,7 +24,7 @@ async function main() {
                 let start = null;
                 let exists = false;
 
-                if ((new Date(currentUtcTS) - new Date(restockUtcTS) > validTime)) {
+                if ((new Date(currentUtcTS) - new Date(restockUtcTS.getTime() + restockUtcTS.getTimezoneOffset() * 60000) > validTime)) {
                     start = false;
                 } else {
                     start = true;
@@ -54,7 +54,7 @@ async function main() {
 
 async function cleanOldStarts() {
     GlobalStore.forEach(ts => {
-        let restockUtcTS = ts.timestamp;
+        let restockUtcTS = new Date(ts.timestamp);
                 
         let now = new Date();
         let currentUtcTS = new Date(now.getTime() + now.getTimezoneOffset() * 60000)
@@ -63,7 +63,7 @@ async function cleanOldStarts() {
         
         let start = null;
 
-        if ((new Date(currentUtcTS) - new Date(restockUtcTS) > validTime)) {
+        if ((new Date(currentUtcTS) - new Date(restockUtcTS.getTime() + restockUtcTS.getTimezoneOffset() * 60000) > validTime)) {
             start = false;
         } else {
             start = true;
